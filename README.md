@@ -5,7 +5,7 @@ Um guia prático, direto ao ponto e estruturado para consulta rápida de sintaxe
 ## 💡 Como Utilizar
 
 - Cada item do índice abaixo contém um **resumo direto** com **código de exemplo**.
-- Clique no link de cada tópico para acessar a **explicação detalhada e completa** na pasta [`topicos/`](topicos/).
+- Clique no link de cada tópico para acessar a **explicação detalhada e completa**.
 
 ---
 
