@@ -11,8 +11,7 @@ Um guia prático, direto ao ponto e estruturado para consulta rápida de sintaxe
 
 ## 📌 Índice de Tópicos
 
-
-### 00. [Fundamentos Básicos da Linguagem](topicos/02-fundamentos-basicos.md)
+### 00. [Fundamentos Básicos da Linguagem](topicos/00-fundamentos-basicos.md)
 Sintaxe essencial e conceitos universais de programação implementados no Java:
 
 - **Variáveis & Tipos:** `int`, `double`, `boolean`, `char`, `String` e inferência local `var`.
@@ -58,6 +57,65 @@ public static int somar(int... numeros) {
 somar();            // Retorna 0
 somar(10);          // Retorna 10
 somar(1, 2, 3, 4);  // Retorna 10
+```
+
+[⬆️ Voltar ao Início](#-java-cheat-sheet)
+
+---
+
+### 02. [Sobrecarga de Métodos (Method Overloading)](topicos/02-sobrecarga-de-metodos.md)
+Permite criar múltiplos métodos com o **mesmo nome**, desde que possuam **listas de parâmetros diferentes** (quantidade, tipos ou ordem).
+
+> ⚠️ **Regra:** O **tipo de retorno não faz parte da assinatura**. Mudar apenas o tipo de retorno não é sobrecarga e gera erro de compilação.
+
+```java
+public class Calculadora {
+    // Sobrecarga por quantidade e tipos
+    public int somar(int a, int b) { return a + b; }
+    public int somar(int a, int b, int c) { return a + b + c; }
+    public double somar(double a, double b) { return a + b; }
+}
+
+// Chamadas:
+calc.somar(2, 3);        // Chama versão (int, int) -> 5
+calc.somar(1, 2, 3);     // Chama versão (int, int, int) -> 6
+calc.somar(2.5, 3.5);    // Chama versão (double, double) -> 6.0
+```
+
+[⬆️ Voltar ao Início](#-java-cheat-sheet)
+
+---
+
+### 03. [Programação Orientada a Objetos (POO / OOP)](topicos/03-programacao-orientada-a-objetos.md)
+Organização do código em torno de **Classes**, **Objetos** e os **4 Pilares fundamentais**:
+
+- **Abstração & Encapsulamento:** Atributos `private`, métodos `public` e controle de acesso.
+- **Herança (`extends`):** Reuso e especialização de código com `super(...)`.
+- **Polimorfismo (`@Override`):** Execução do comportamento específico da subclasse em tempo de execução.
+- **Interfaces & Classes Abstratas:** Contratos com `implements` e classes base com `abstract`.
+
+```java
+// Superclasse Abstrata
+public abstract class Animal {
+    private String nome;
+    public Animal(String nome) { this.nome = nome; }
+    public String getNome() { return nome; }
+    public abstract void emitirSom();
+}
+
+// Subclasse Concreta com Polimorfismo
+public class Cachorro extends Animal {
+    public Cachorro(String nome) { super(nome); }
+
+    @Override
+    public void emitirSom() {
+        System.out.println(getNome() + " late: Au Au!");
+    }
+}
+
+// Uso polimórfico:
+Animal animal = new Cachorro("Rex");
+animal.emitirSom(); // Rex late: Au Au!
 ```
 
 [⬆️ Voltar ao Início](#-java-cheat-sheet)
