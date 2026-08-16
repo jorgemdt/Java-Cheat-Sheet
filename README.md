@@ -11,7 +11,7 @@ Um guia prático, direto ao ponto e estruturado para consulta rápida de sintaxe
 
 ## 📌 Índice de Tópicos
 
-### - [ ] [01. Varargs (Variable Arguments)](topicos/01-varargs.md)
+### - [01. Varargs (Variable Arguments)](topicos/01-varargs.md)
 Permite que um método receba **zero ou múltiplos argumentos** de um mesmo tipo (`Tipo...`), sendo convertidos internamente em um array.
 
 > ⚠️ **Regra:** Deve ser **sempre o último parâmetro** e só pode haver **um** varargs por método.
