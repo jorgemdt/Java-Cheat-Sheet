@@ -69,17 +69,19 @@ Permite criar múltiplos métodos com o **mesmo nome**, desde que possuam **list
 > ⚠️ **Regra:** O **tipo de retorno não faz parte da assinatura**. Mudar apenas o tipo de retorno não é sobrecarga e gera erro de compilação.
 
 ```java
-public class Calculadora {
-    // Sobrecarga por quantidade e tipos
-    public int somar(int a, int b) { return a + b; }
-    public int somar(int a, int b, int c) { return a + b + c; }
-    public double somar(double a, double b) { return a + b; }
+public class Notificador {
+    // Sobrecarga variando quantidade e tipos de parâmetros
+    public void enviar(String msg) { System.out.println("Aviso: " + msg); }
+    public void enviar(String para, String msg) { System.out.println("Para " + para + ": " + msg); }
+    public void enviar(String para, String msg, boolean urgente) {
+        System.out.println((urgente ? "[URGENTE] " : "[INFO] ") + para + ": " + msg);
+    }
 }
 
-// Chamadas:
-calc.somar(2, 3);        // Chama versão (int, int) -> 5
-calc.somar(1, 2, 3);     // Chama versão (int, int, int) -> 6
-calc.somar(2.5, 3.5);    // Chama versão (double, double) -> 6.0
+// Chamadas válidas:
+notif.enviar("Servidor reiniciado");
+notif.enviar("admin@empresa.com", "Backup concluído");
+notif.enviar("admin@empresa.com", "Falha crítica!", true);
 ```
 
 [⬆️ Voltar ao Início](#-java-cheat-sheet)
@@ -90,6 +92,7 @@ calc.somar(2.5, 3.5);    // Chama versão (double, double) -> 6.0
 Organização do código em torno de **Classes**, **Objetos** e os **4 Pilares fundamentais**:
 
 - **Abstração & Encapsulamento:** Atributos `private`, métodos `public` e controle de acesso.
+- **Construtores & Sobrecarga:** Inicialização de instâncias e encadeamento com `this(...)`.
 - **Herança (`extends`):** Reuso e especialização de código com `super(...)`.
 - **Polimorfismo (`@Override`):** Execução do comportamento específico da subclasse em tempo de execução.
 - **Interfaces & Classes Abstratas:** Contratos com `implements` e classes base com `abstract`.

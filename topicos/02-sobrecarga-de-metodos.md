@@ -8,7 +8,7 @@ A **Sobrecarga de Métodos** (*Method Overloading*) ocorre quando dois ou mais m
 
 ## 🎯 Por que usar Sobrecarga?
 
-Permite que o mesmo conceito/operação seja executado com diferentes entradas sem a necessidade de criar nomes artificiais como `somarDoisNumeros()`, `somarTresNumeros()`, `somarDecimais()`. Usamos apenas `somar()`.
+Permite que uma mesma ação seja executada com diferentes entradas contextuais, sem a necessidade de criar nomes artificiais como `enviarEmail()`, `enviarEmailParaDestinatario()`, `enviarMensagemUrgente()`. Usamos apenas `enviar()`.
 
 ---
 
@@ -23,8 +23,8 @@ $$\text{Assinatura} = \text{Nome do Método} + \text{Lista de Tipos de Parâmetr
 
 ```java
 // ❌ ERRO DE COMPILAÇÃO: O compilador não sabe qual executar se apenas o retorno mudar
-public int calcular(int a) { return a * 2; }
-public double calcular(int a) { return a * 2.0; } // Erro: método duplicado!
+public boolean autenticar(String token) { return true; }
+public String autenticar(String token) { return "OK"; } // Erro: método duplicado!
 ```
 
 ---
@@ -36,15 +36,22 @@ Para ser uma sobrecarga válida, a lista de parâmetros deve variar em pelo meno
 ### 1. Variação na **Quantidade** de Parâmetros
 
 ```java
-public class Calculadora {
+public class Notificador {
 
-    public int somar(int a, int b) {
-        return a + b;
+    // 1 parâmetro: Mensagem geral
+    public void enviar(String mensagem) {
+        System.out.println("Aviso geral: " + mensagem);
     }
 
-    // Sobrecarga com 3 parâmetros
-    public int somar(int a, int b, int c) {
-        return a + b + c;
+    // 2 parâmetros: Destinatário específico + Mensagem
+    public void enviar(String destinatario, String mensagem) {
+        System.out.println("Para " + destinatario + ": " + mensagem);
+    }
+
+    // 3 parâmetros: Destinatário + Mensagem + Flag de urgência
+    public void enviar(String destinatario, String mensagem, boolean urgente) {
+        String tag = urgente ? "[URGENTE] " : "[INFO] ";
+        System.out.println(tag + "Para " + destinatario + ": " + mensagem);
     }
 }
 ```
@@ -54,20 +61,21 @@ public class Calculadora {
 ### 2. Variação nos **Tipos** de Parâmetros
 
 ```java
-public class Impressora {
+public class SistemaLogin {
 
-    public void imprimir(String texto) {
-        System.out.println("Texto: " + texto);
+    // Login com E-mail e Senha (String, String)
+    public void login(String email, String senha) {
+        System.out.println("Autenticando via e-mail: " + email);
     }
 
-    // Sobrecarga com int
-    public void imprimir(int numero) {
-        System.out.println("Número inteiro: " + numero);
+    // Login com ID numérico e PIN (long, int)
+    public void login(long idUsuario, int pin) {
+        System.out.println("Autenticando ID " + idUsuario + " com PIN de segurança.");
     }
 
-    // Sobrecarga com double
-    public void imprimir(double decimal) {
-        System.out.println("Decimal: " + decimal);
+    // Login apenas com Token de acesso (String única)
+    public void login(String tokenAcesso) {
+        System.out.println("Autenticando via Token OAuth.");
     }
 }
 ```
@@ -77,15 +85,16 @@ public class Impressora {
 ### 3. Variação na **Ordem** dos Tipos de Parâmetros
 
 ```java
-public class Exibidor {
+public class FormatadorLog {
 
-    public void exibir(String tag, int id) {
-        System.out.println(tag + ": " + id);
+    // Ordem: int antes de String
+    public void registrar(int codigoStatus, String mensagem) {
+        System.out.println("Status [" + codigoStatus + "] -> " + mensagem);
     }
 
-    // Sobrecarga invertendo os tipos (int antes de String)
-    public void exibir(int id, String tag) {
-        System.out.println(id + " - " + tag);
+    // Ordem: String antes de int
+    public void registrar(String mensagem, int codigoStatus) {
+        System.out.println(mensagem + " (Código retornado: " + codigoStatus + ")");
     }
 }
 ```
@@ -102,23 +111,23 @@ Podemos reutilizar construtores utilizando `this(...)`:
 public class Usuario {
     private String nome;
     private String email;
-    private int idade;
+    private String perfil;
 
     // Construtor 1: Completo
-    public Usuario(String nome, String email, int idade) {
+    public Usuario(String nome, String email, String perfil) {
         this.nome = nome;
         this.email = email;
-        this.idade = idade;
+        this.perfil = perfil;
     }
 
-    // Construtor 2: Sem idade (define padrão 0 chamando o construtor 1)
+    // Construtor 2: Perfil padrão de "CLIENTE" (chama o construtor 1)
     public Usuario(String nome, String email) {
-        this(nome, email, 0); // Chama o outro construtor
+        this(nome, email, "CLIENTE");
     }
 
-    // Construtor 3: Padrão / Vazio
+    // Construtor 3: Usuário Convidado/Anônimo
     public Usuario() {
-        this("Anônimo", "sem-email@teste.com", 0);
+        this("Convidado", "anonimo@sistema.com", "VISITANTE");
     }
 }
 ```
@@ -132,23 +141,23 @@ Quando um método sobrecarregado é chamado, o compilador Java escolhe a versão
 1. **Correspondência Exata:** Tipo exatamente igual.
 2. **Promoção de Tipo Primitivo (*Widening*):** `byte` $\rightarrow$ `short` $\rightarrow$ `int` $\rightarrow$ `long` $\rightarrow$ `float` $\rightarrow$ `double`.
 3. **Autoboxing / Unboxing:** `int` $\rightarrow$ `Integer`.
-4. **Varargs:** `int...` (é sempre a **última prioridade** na escolha).
+4. **Varargs:** `tipo...` (é sempre a **última prioridade** na escolha).
 
 ### Exemplo de Type Promotion:
 
 ```java
 public class TestePromocao {
-    public static void processar(int n) {
+    public static void exibir(int n) {
         System.out.println("int: " + n);
     }
 
-    public static void processar(double d) {
+    public static void exibir(double d) {
         System.out.println("double: " + d);
     }
 
     public static void main(String[] args) {
         short x = 10;
-        processar(x); // Executa processar(int) porque short é promovido para int antes de double!
+        exibir(x); // Executa exibir(int) porque short é promovido para int antes de double!
     }
 }
 ```
@@ -166,7 +175,7 @@ public class Ambiguidade {
 
     public static void main(String[] args) {
         // demo(10, 20); // ERRO DE COMPILAÇÃO: Chamada ambígua!
-        // O Java não sabe se promove o 1º ou o 2º int para double.
+        // O compilador não sabe qual parâmetro promover para double.
     }
 }
 ```

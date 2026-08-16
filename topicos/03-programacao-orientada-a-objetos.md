@@ -49,6 +49,52 @@ public class Carro {
 }
 ```
 
+### 🏗️ Sobrecarga de Construtores (*Constructor Overloading*)
+
+Permite definir múltiplos construtores em uma mesma classe com **listas de parâmetros diferentes**, dando flexibilidade para instanciar objetos com valores parciais, padrão ou completos.
+
+Podemos utilizar `this(...)` para encadear construtores (*constructor chaining*) e evitar duplicação de código.
+
+> [!IMPORTANT]
+> A chamada `this(...)` para outro construtor deve ser **obrigatoriamente a primeira linha** dentro do corpo do construtor.
+
+```java
+public class Pizza {
+    private String massa;
+    private String molho;
+    private String queijo;
+    private String cobertura;
+
+    // Construtor 1: Completo (4 ingredientes)
+    public Pizza(String massa, String molho, String queijo, String cobertura) {
+        this.massa = massa;
+        this.molho = molho;
+        this.queijo = queijo;
+        this.cobertura = cobertura;
+    }
+
+    // Construtor 2: Sem cobertura (chama o construtor 1 com valor padrão)
+    public Pizza(String massa, String molho, String queijo) {
+        this(massa, molho, queijo, "Nenhuma");
+    }
+
+    // Construtor 3: Simples (apenas massa e molho)
+    public Pizza(String massa, String molho) {
+        this(massa, molho, "Sem queijo", "Nenhuma");
+    }
+
+    // Construtor 4: Padrão / Sem argumentos
+    public Pizza() {
+        this("Tradicional", "Tomate", "Mussarela", "Manjericão");
+    }
+}
+
+// Exemplos de instanciação:
+Pizza p1 = new Pizza("Fina", "Tomate", "Mussarela", "Calabresa");
+Pizza p2 = new Pizza("Grossa", "Tomate", "Mussarela");
+Pizza p3 = new Pizza(); // Padrão
+```
+
 ---
 
 ## 2. 🛡️ Modificadores de Acesso e Encapsulamento
