@@ -12,7 +12,7 @@ Um guia prático, direto ao ponto e estruturado para consulta rápida de sintaxe
 ## 📌 Índice de Tópicos
 
 
-### 00. [Fundamentos Básicos da Linguagem](topicos/02-fundamentos-basicos.md)
+### 00. [Fundamentos Básicos da Linguagem](topicos/00-fundamentos-basicos.md)
 Sintaxe essencial e conceitos universais de programação implementados no Java:
 
 - **Variáveis & Tipos:** `int`, `double`, `boolean`, `char`, `String` e inferência local `var`.
