@@ -18,6 +18,7 @@ Sintaxe essencial e conceitos universais de programação implementados no Java:
 - **Entrada e Saída:** `System.out.println()`, `System.out.printf()` e `Scanner`.
 - **Operadores & Condicionais:** Aritméticos, lógicos, ternário, `if-else` e `switch`.
 - **Loops & Arrays:** `for`, `while`, `for-each` e vetores indexados `tipo[]`.
+- **Funções & Métodos:** Anatomia (`static`, retorno, parâmetros), *Pass-by-Value* e recursão.
 
 ```java
 // Variáveis e Impressão formatada

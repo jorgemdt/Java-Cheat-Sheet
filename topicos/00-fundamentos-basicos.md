@@ -216,27 +216,132 @@ for (String lang : linguagens) {
 
 ---
 
-## 7. ⚙️ Métodos (Funções)
+## 7. ⚙️ Funções e Métodos
 
-Em Java, funções pertencem a classes e são chamadas de **métodos**.
+Em Java, **não existem funções soltas/globais** fora de classes. Todas as funções são membros de uma classe e chamadas de **métodos**.
+
+---
+
+### 7.1 Anatomia de um Método
 
 ```java
-public class ExemploMetodos {
+// [modificador] [static/opcional] [tipo_retorno] nomeDoMetodo([parâmetros]) { ... }
 
-    // Método sem retorno (void)
-    public static void exibirMensagem(String nome) {
-        System.out.println("Bem-vindo(a), " + nome);
+public static int somarValores(int a, int b) {
+    int resultado = a + b;
+    return resultado; // Retorna o valor compatível com o tipo definido
+}
+```
+
+- **Modificador de Acesso (`public`, `private`):** Define quem pode chamar o método.
+- **`static`:** Permite chamar o método diretamente pela classe (sem precisar de `new`).
+- **Tipo de Retorno:** O tipo do dado que o método devolve (`int`, `String`, `boolean`, etc.) ou `void` caso não retorne nada.
+- **Nome do Método:** Por convenção, utiliza-se **`camelCase`** iniciando com verbo (ex: `calcularMedia`, `obterNome`).
+- **Parâmetros:** Variáveis declaradas na assinatura que recebem os dados de entrada.
+
+---
+
+### 7.2 Métodos `void` vs Métodos com Retorno
+
+#### Método sem retorno (`void`) com Retorno Antecipado (*Early Return*):
+```java
+public static void verificarIdade(int idade) {
+    // Cláusula de guarda (Early Return)
+    if (idade < 0) {
+        System.out.println("Idade inválida!");
+        return; // Interrompe a execução do método imediatamente
     }
 
-    // Método com retorno (int) e dois parâmetros
-    public static int multiplicar(int a, int b) {
-        return a * b;
+    if (idade >= 18) {
+        System.out.println("Acesso liberado.");
+    } else {
+        System.out.println("Acesso restrito.");
+    }
+}
+```
+
+#### Método com Retorno:
+Todo caminho de execução deve, obrigatoriamente, alcançar uma instrução `return` com um valor compatível:
+```java
+public static boolean ehPar(int numero) {
+    return numero % 2 == 0;
+}
+```
+
+---
+
+### 7.3 Passagem por Valor (*Pass-by-Value*)
+
+> [!IMPORTANT]
+> Em Java, **todos os argumentos são passados estritamente por valor** (uma cópia é entregue ao método).
+
+- **Com tipos primitivos (`int`, `double`, etc.):** Uma cópia do valor literal é passada. Alterar a variável dentro do método **não** altera a variável original de fora.
+- **Com objetos e arrays:** Uma cópia da **referência** de memória é passada. Você pode alterar os elementos internos do objeto/array, mas reatribuir a variável do parâmetro não afeta a variável externa.
+
+```java
+public class PassagemPorValor {
+
+    public static void alterarPrimitivo(int x) {
+        x = 99; // Altera apenas a cópia local
+    }
+
+    public static void alterarArray(int[] arr) {
+        arr[0] = 999; // Altera o elemento do array referenciado!
     }
 
     public static void main(String[] args) {
-        exibirMensagem("Dev");
-        int res = multiplicar(4, 5);
-        System.out.println("Resultado: " + res); // 20
+        int numero = 10;
+        alterarPrimitivo(numero);
+        System.out.println("Número continua: " + numero); // 10
+
+        int[] lista = {1, 2, 3};
+        alterarArray(lista);
+        System.out.println("Array modificado: " + lista[0]); // 999
+    }
+}
+```
+
+---
+
+### 7.4 Escopo de Variáveis (*Variable Scope*)
+
+- **Variáveis Locais:** Declaradas dentro do método ou bloco `{ }`. Elas nascem no início do bloco e são destruídas ao fim dele.
+- Não podem ser acessadas fora do seu respectivo bloco ou método.
+
+```java
+public static void exemploEscopo() {
+    int total = 100; // Visível em todo o método
+
+    if (total > 50) {
+        int bonus = 20; // Visível apenas dentro deste bloco if
+        System.out.println(total + bonus);
+    }
+
+    // System.out.println(bonus); // ERRO: 'bonus' não existe fora do if!
+}
+```
+
+---
+
+### 7.5 Recursividade (*Recursion*)
+
+Um método recursivo é aquele que **chama a si mesmo** para resolver um problema menor até atingir uma **condição de parada (*Base Case*)**.
+
+```java
+public class ExemploRecursao {
+
+    // Fatorial: n! = n * (n - 1)!
+    public static int fatorial(int n) {
+        // Caso base (condição de parada)
+        if (n <= 1) {
+            return 1;
+        }
+        // Chamada recursiva
+        return n * fatorial(n - 1);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Fatorial de 5: " + fatorial(5)); // 120
     }
 }
 ```
