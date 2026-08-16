@@ -134,15 +134,12 @@ public class ContaBancaria {
 
 ---
 
-## 3. 🧬 Herança (`extends` e `super`)
+## 3. 🧬 Herança (`extends`) e a Palavra-Chave `super`
 
-A herança cria uma relação **"é um"** (*is-a*). Em Java, uma classe só pode herdar diretamente de **uma única superclasse** (herança simples).
-
-- `super(...)`: Chama o construtor da superclasse.
-- `super.metodo()`: Invoca o método da superclasse.
+A herança cria uma relação **"é um"** (*is-a*). Em Java, uma classe só pode herdar diretamente de **uma única superclasse** (herança simples via `extends`).
 
 ```java
-// Superclasse (Mãe)
+// Superclasse (Mãe / Classe Base)
 public class Animal {
     protected String nome;
 
@@ -155,11 +152,11 @@ public class Animal {
     }
 }
 
-// Subclasse (Filha)
+// Subclasse (Filha / Classe Derivada)
 public class Cachorro extends Animal {
 
     public Cachorro(String nome) {
-        super(nome); // Chama o construtor de Animal
+        super(nome); // Invoca o construtor da superclasse Animal
     }
 
     @Override
@@ -168,6 +165,128 @@ public class Cachorro extends Animal {
     }
 }
 ```
+
+---
+
+### 🔝 A Palavra-Chave `super` em Detalhes
+
+A palavra-chave `super` é uma referência direta à **superclasse imediata** (classe mãe). Ela é utilizada em três cenários principais dentro de uma subclasse:
+
+```
+┌────────────────────────────────────────────────────────┐
+│              USOS DA PALAVRA-CHAVE super               │
+├───────────────────┬───────────────────┬────────────────┤
+│   super(...)      │   super.metodo()  │ super.atributo │
+│                   │                   │                │
+│ Chama construtor  │ Executa método da │ Acessa campo   │
+│ da superclasse    │ mãe sobrescrito   │ pai oculto     │
+└───────────────────┴───────────────────┴────────────────┘
+```
+
+#### 1. `super(...)` — Invocar o Construtor da Superclasse
+Permite inicializar os atributos herdados definidos na superclasse.
+
+- Deve ser **obrigatoriamente a primeira linha** do construtor da subclasse.
+- O construtor da superclasse é sempre executado **antes** do corpo do construtor da subclasse.
+
+```java
+public class Veiculo {
+    private String marca;
+    private int ano;
+
+    public Veiculo(String marca, int ano) {
+        this.marca = marca;
+        this.ano = ano;
+    }
+}
+
+public class Moto extends Veiculo {
+    private int cilindradas;
+
+    public Moto(String marca, int ano, int cilindradas) {
+        super(marca, ano); // 1ª Linha: inicializa marca e ano em Veiculo
+        this.cilindradas = cilindradas; // Inicializa o atributo específico da Moto
+    }
+}
+```
+
+> [!IMPORTANT]
+> **Chamada Implícita vs Explícita:**
+> Se você **não** chamar `super(...)` explicitamente no construtor da subclasse, o compilador Java insere automaticamente uma chamada implícita para o construtor sem argumentos: `super();`.
+>
+> Se a superclasse tiver apenas construtores com parâmetros (e nenhum construtor sem argumentos), o compilador gerará um **erro de compilação** caso você não declare `super(argumentos)` explicitamente!
+
+---
+
+#### 2. `super.metodo()` — Reaproveitar Métodos da Superclasse
+Quando uma subclasse sobrescreve um método com `@Override`, ela pode chamar a versão original da superclasse para **estender** o comportamento ao invés de reescrevê-lo completamente:
+
+```java
+public class Funcionario {
+    protected String nome;
+    protected double salario;
+
+    public Funcionario(String nome, double salario) {
+        this.nome = nome;
+        this.salario = salario;
+    }
+
+    public double getRendimentos() {
+        return this.salario;
+    }
+}
+
+public class Gerente extends Funcionario {
+    private double bonus;
+
+    public Gerente(String nome, double salario, double bonus) {
+        super(nome, salario);
+        this.bonus = bonus;
+    }
+
+    @Override
+    public double getRendimentos() {
+        // Reaproveita o cálculo base da mãe e soma o bônus específico do Gerente
+        return super.getRendimentos() + this.bonus;
+    }
+}
+```
+
+---
+
+#### 3. `super.atributo` — Acessar Atributos Ocultos (*Field Shadowing*)
+Se a subclasse declarar um atributo com o mesmo nome de um atributo da superclasse, o atributo da classe filha **oculta** o da superclasse. Usamos `super.atributo` para acessar explicitamente o campo da mãe:
+
+```java
+public class ComponentePai {
+    protected int codigo = 100;
+}
+
+public class ComponenteFilho extends ComponentePai {
+    protected int codigo = 200; // Oculta o atributo da superclasse
+
+    public void exibirCodigos() {
+        System.out.println("Código do Filho (this.codigo): " + this.codigo);       // 200
+        System.out.println("Código do Pai   (super.codigo): " + super.codigo);     // 100
+    }
+}
+```
+
+---
+
+### 📊 Comparativo: `this` vs `super`
+
+| Característica | `this` | `super` |
+| :--- | :--- | :--- |
+| **Refere-se a** | Instância da **própria classe** atual | Instância da **superclasse imediata** |
+| **Acesso a Atributos** | `this.campo` (campo da classe atual) | `super.campo` (campo da superclasse) |
+| **Chamada de Métodos** | `this.metodo()` (método da classe atual) | `super.metodo()` (método original da superclasse) |
+| **Chamada de Construtor** | `this(...)` (outro construtor da mesma classe) | `super(...)` (construtor da superclasse) |
+| **Regra no Construtor** | Deve ser a 1ª linha | Deve ser a 1ª linha |
+| **Contexto Estático (`static`)**| ❌ Não permitido | ❌ Não permitido |
+
+> [!WARNING]
+> Você **não pode** chamar `this(...)` e `super(...)` no mesmo construtor, pois ambos exigem ser a primeira instrução executada!
 
 ---
 

@@ -127,3 +127,36 @@ animal.emitirSom(); // Rex late: Au Au!
 [⬆️ Voltar ao Início](#-java-cheat-sheet)
 
 ---
+
+### 04. [O Método toString()](topicos/04-metodo-tostring.md)
+Representação textual legível do estado dos objetos herdada de `java.lang.Object`:
+
+- **Sobrescrita (`@Override`):** Substituição da saída técnica padrão (`Classe@hash`) por atributos legíveis.
+- **Chamadas Implícitas:** Execução automática em `System.out.println()`, concatenação `+` e coleções.
+- **Arrays e Matrizes:** Impressão correta via `Arrays.toString()` e `Arrays.deepToString()`.
+- **Java Records:** Geração nativa e automática do método `toString()`.
+
+```java
+public class Pessoa {
+    private String nome;
+    private int idade;
+
+    public Pessoa(String nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    @Override
+    public String toString() {
+        return "Pessoa{nome='" + nome + "', idade=" + idade + "}";
+    }
+}
+
+// Uso (chamada implícita):
+Pessoa p = new Pessoa("Alice", 25);
+System.out.println(p); // Saída: Pessoa{nome='Alice', idade=25}
+```
+
+[⬆️ Voltar ao Início](#-java-cheat-sheet)
+
+---
