@@ -97,6 +97,8 @@ Organização do código em torno de **Classes**, **Objetos** e os **4 Pilares f
 - **Herança (`extends`):** Reuso e especialização de código com `super(...)`.
 - **Polimorfismo (`@Override`):** Execução do comportamento específico da subclasse em tempo de execução.
 - **Interfaces & Classes Abstratas:** Contratos com `implements` e classes base com `abstract`.
+- **Membros Estáticos (`static`):** Atributos, métodos, blocos de inicialização e classes aninhadas.
+- **Imutabilidade (`final`):** Constantes, métodos não-sobrescrevíveis e classes não-estendíveis.
 
 ```java
 // Superclasse Abstrata
