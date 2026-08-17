@@ -160,3 +160,34 @@ System.out.println(p); // Saída: Pessoa{nome='Alice', idade=25}
 [⬆️ Voltar ao Início](#-java-cheat-sheet)
 
 ---
+
+### 05. [Polimorfismo em Tempo de Execução (Runtime Polymorphism)](topicos/05-polimorfismo-em-tempo-de-execucao.md)
+Mecanismo (*Dynamic Method Dispatch*) onde a chamada de métodos sobrescritos (`@Override`) é resolvida dinamicamente pela JVM com base no **objeto real instanciado na memória Heap**:
+
+- **Requisitos:** Herança/Interfaces, sobrescrita `@Override` e Upcasting (`SuperClasse ref = new SubClasse()`).
+- **Coleções Polimórficas:** Manipulação uniforme de diferentes subtipos em arrays ou listas.
+- **Restrições:** Atributos (*fields*), métodos `static`, `private` e `final` **não** sofrem polimorfismo dinâmico.
+- **Casting Seguro:** Conversão de tipos com `instanceof` e *Pattern Matching*.
+
+```java
+// Interface / Superclasse
+interface Veiculo { void mover(); }
+
+class Carro implements Veiculo { 
+    public void mover() { System.out.println("Carro acelerando 🚗"); } 
+}
+class Barco implements Veiculo { 
+    public void mover() { System.out.println("Barco navegando ⛵"); } 
+}
+
+// Execução dinâmica em tempo de execução:
+Veiculo[] frota = { new Carro(), new Barco() };
+for (Veiculo v : frota) {
+    v.mover(); // Cada objeto executa seu próprio comportamento!
+}
+```
+
+[⬆️ Voltar ao Início](#-java-cheat-sheet)
+
+---
+
