@@ -213,4 +213,58 @@ System.out.println(livro.getTitulo()); // O livro continua existindo intacto!
 
 ---
 
+### 07. [Composição (Composition)](topicos/07-composicao.md)
+Relação de associação do tipo **"TEM-UM"** (*HAS-A*) com **acoplamento forte**, caracterizada pela **morte compartilhada** e ciclos de vida estritamente dependentes:
+
+- **Morte Compartilhada:** O objeto filho não tem existência independente fora da classe dona (se o pai for destruído, o filho também será).
+- **Instanciação Interna:** O componente é criado diretamente dentro do construtor da classe dona com `new`.
+- **Delegação de Chamadas:** A classe dona delega as operações para o componente interno encapsulado.
+
+```java
+// O Carro cria e gerencia seu próprio Motor internamente
+public class Carro {
+    private Motor motor;
+
+    public Carro(String tipoMotor, int cavalos) {
+        this.motor = new Motor(tipoMotor, cavalos); // Instanciação interna
+    }
+
+    public void ligar() {
+        motor.ligar(); // Delegação
+    }
+}
+```
+
+[⬆️ Voltar ao Início](#-java-cheat-sheet)
+
+---
+
+### 08. [Classes Wrapper (Wrapper Classes)](topicos/08-classes-wrapper.md)
+Classes utilitárias (`Integer`, `Double`, `Boolean`, `Character`) que transformam os 8 tipos primitivos em **Objetos**, permitindo seu uso com Generics, Coleções e métodos auxiliares:
+
+- **Autoboxing & Unboxing:** Conversão automática e transparente entre primitivos e objetos wrapper.
+- **Coleções & Generics:** Obrigatório para uso em estruturas como `List<Integer>` ou `Map<String, Double>`.
+- **Métodos Utilitários:** Conversão de texto para número (`Integer.parseInt()`) e validação de caracteres (`Character.isLetter()`).
+- **Cuidado com Cache & Nulos:** Sempre comparar wrappers com `.equals()` e evitar `NullPointerException` no unboxing de variáveis nulas.
+
+```java
+// Autoboxing e Parsing
+Integer idade = 25; 
+int valor = Integer.parseInt("100");
+
+// Obrigatório em Coleções e Generics
+List<Double> notas = new ArrayList<>();
+notas.add(9.5); // Autoboxing automático de double para Double
+
+// Comparação segura de conteúdo
+Integer a = 200, b = 200;
+System.out.println(a.equals(b)); // true
+```
+
+[⬆️ Voltar ao Início](#-java-cheat-sheet)
+
+---
+
+
+
 
