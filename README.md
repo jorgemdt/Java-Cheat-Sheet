@@ -15,6 +15,7 @@ Um guia prático, direto ao ponto e estruturado para consulta rápida de sintaxe
 Sintaxe essencial e conceitos universais de programação implementados no Java:
 
 - **Variáveis & Tipos:** `int`, `double`, `boolean`, `char`, `String` e inferência local `var`.
+- **Constantes (`final`):** Equivalente ao `const` de outras linguagens (trava valor primitivo ou referência de memória).
 - **Entrada e Saída:** `System.out.println()`, `System.out.printf()` e `Scanner`.
 - **Operadores & Condicionais:** Aritméticos, lógicos, ternário, `if-else` e `switch`.
 - **Loops & Arrays:** `for`, `while`, `for-each` e vetores indexados `tipo[]`.

@@ -53,6 +53,67 @@ String nome = "Maria";            // Aspas duplas para texto
 
 ---
 
+### 2.1 🔒 Constantes com `final` (O `const` do Java)
+
+Em Java, **não existe a palavra-chave `const`** ativa na linguagem (embora seja uma palavra reservada). Para criar variáveis cujo valor não pode ser reatribuído após a inicialização, utiliza-se o modificador **`final`**.
+
+```java
+// Variável local constante (não pode ser alterada)
+final double PI = 3.14159;
+// PI = 3.14; // ❌ ERRO DE COMPILAÇÃO: cannot assign a value to final variable PI
+
+// Constante Global / de Classe (Padrão mais comum em Java):
+public static final int LIMITE_TENTATIVAS = 5;
+```
+
+#### 🌐 Correlação do `final` com outras linguagens:
+
+| Linguagem | Equivalente a `final` | Exemplo de Sintaxe | Comportamento |
+| :--- | :--- | :--- | :--- |
+| **Java** | `final` | `final double PI = 3.14;` | Impede reatribuição da variável |
+| **JavaScript / TypeScript** | `const` | `const PI = 3.14;` | Idêntico ao `final` do Java |
+| **C / C++** | `const` | `const double PI = 3.14;` | Imutabilidade em tempo de compilação/execução |
+| **C#** | `const` ou `readonly` | `const double PI = 3.14;` | `const` (compilação) e `readonly` (runtime) |
+| **Python** | Convenção / `Final` | `MAX_SIZE: Final = 100` | Convenção maiúscula ou tipo `typing.Final` |
+
+---
+
+#### ⚠️ Cuidado Crítico: Primitivos vs Objetos com `final` (Igual ao `const` no JS/C++)
+
+Assim como o `const` do JavaScript ou ponteiros constantes em C++, o `final` em Java **protege a referência de memória, e não o conteúdo interno do objeto**:
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class ExemploFinalComObjetos {
+    public static void main(String[] args) {
+        // 1. COM TIPOS PRIMITIVOS: O valor é 100% travado
+        final int idade = 20;
+        // idade = 21; // ❌ ERRO: valor primitivo não pode mudar
+
+        // 2. COM ARRAYS E OBJETOS: Apenas o endereço de memória é travado
+        final List<String> frutas = new ArrayList<>();
+        
+        frutas.add("Maçã");     // ✅ PERMITIDO: Alterando o conteúdo interno da lista
+        frutas.add("Banana");   // ✅ PERMITIDO: O objeto interno é mutável
+        
+        // frutas = new ArrayList<>(); // ❌ ERRO: Não pode reatribuir a referência para outro objeto!
+
+        final int[] numeros = {1, 2, 3};
+        numeros[0] = 99; // ✅ PERMITIDO: Alterou o elemento do array
+        // numeros = new int[]{4, 5, 6}; // ❌ ERRO: Não pode reatribuir o array!
+    }
+}
+```
+
+> [!NOTE]
+> **Convenção de Nomenclatura:**
+> - Constantes globais (`public static final`) são sempre escritas em **`UPPER_SNAKE_CASE`** (ex: `TAXA_JUROS_PADRAO`, `URL_CONEXAO`).
+> - Variáveis locais `final` comuns podem seguir o `camelCase` padrão.
+
+---
+
 ## 3. ⌨️ Entrada e Saída de Dados (I/O)
 
 Para ler dados do terminal, utiliza-se a classe `java.util.Scanner`.
