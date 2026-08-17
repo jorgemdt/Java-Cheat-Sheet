@@ -265,6 +265,33 @@ System.out.println(a.equals(b)); // true
 
 ---
 
+### 09. [ArrayList (Listas Dinâmicas)](topicos/09-arraylist.md)
+Estrutura de dados redimensionável da *Collections Framework* que permite armazenar sequências dinâmicas de **Objetos**:
+
+- **Array vs ArrayList:** Redimensionamento automático vs tamanho estático fixo (`tipo[]`).
+- **Operações Principais:** `add()`, `get()`, `set()`, `remove()`, `size()`, `contains()` e `clear()`.
+- **Iteração & Ordenação:** Percorrimento com `for-each`, lambdas e ordenação via `Collections.sort()`.
+- **ArrayList 2D:** Criação de matrizes dinâmicas multidimensionais (`ArrayList<ArrayList<T>>`).
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+// Declaração e manipulação
+List<String> frutas = new ArrayList<>();
+frutas.add("Maçã");
+frutas.add("Banana");
+frutas.set(1, "Morango"); // Substitui "Banana" por "Morango"
+frutas.remove("Maçã");    // Remove por valor
+
+System.out.println(frutas); // [Morango]
+```
+
+[⬆️ Voltar ao Início](#-java-cheat-sheet)
+
+---
+
+
 
 
 
