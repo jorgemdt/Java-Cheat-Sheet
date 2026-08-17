@@ -191,3 +191,26 @@ for (Veiculo v : frota) {
 
 ---
 
+### 06. [Agregação (Aggregation)](topicos/06-agregacao.md)
+Relação de associação do tipo **"TEM-UM"** (*HAS-A*) com **acoplamento fraco**, onde os objetos associados possuem ciclos de vida independentes:
+
+- **Ciclo de Vida Independente:** Se o objeto dono for destruído, o objeto agregado continua existindo na memória.
+- **Injeção via Construtor/Setter:** Os objetos são instanciados fora e passados como parâmetros.
+- **Agregação vs Composição:** Na composição a existência do filho depende do pai (`Carro`/`Motor`); na agregação os objetos são autônomos (`Biblioteca`/`Livro`).
+
+```java
+// O livro existe de forma independente
+Livro livro = new Livro("Código Limpo", "Robert Martin");
+
+// A biblioteca agrega o livro existente
+Biblioteca biblio = new Biblioteca("TechLib", new Livro[]{ livro });
+
+biblio = null; // A biblioteca é descartada
+System.out.println(livro.getTitulo()); // O livro continua existindo intacto!
+```
+
+[⬆️ Voltar ao Início](#-java-cheat-sheet)
+
+---
+
+
